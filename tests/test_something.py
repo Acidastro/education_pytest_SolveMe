@@ -4,7 +4,6 @@
 
 import requests
 from jsonschema import validate
-from configuration import SERVICE_URL
 from src.enums.global_enums import GlobalErrorMessages
 # from src.schemas.post import POST_SCHEMA
 from src.baseclasses.response import Response
@@ -20,9 +19,7 @@ from src.pydantic_schemas.user import User
 # # [{'id': 1, 'title': 'Post 1'}, {'id': 2, 'title': 'Post 2'}, {'id': 3, 'title': 'Post 3'}]
 
 
-def test_getting_users_list():
-    response = requests.get(SERVICE_URL)
-    test_object = Response(response)
+def test_getting_users_list(get_users, say_hello):
     # print(response.__getstate__())  # Показывает внутреннюю информацию документа
-    test_object.assert_status_code(300).validate(User)
-
+    Response(get_users).assert_status_code(200).validate(User)
+    print(say_hello)  # Печатает результат фикстуры
