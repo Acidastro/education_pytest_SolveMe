@@ -4,21 +4,50 @@
 # определяет фикстуры благодаря декоратору @pytest.fixture, достаточно в параметрах теста
 # указать название функции текстуры. Так же тест будет принимать в параметры результат выполнения фикстуры
 # scope='session' позволяет кешировать результат вычисления фикстуры и не вычислять его каждый раз
-# autouse=True позволяет автоматически выполнять фикстуру для каждого теста (не рекомендуется)
+# autouse=True позволяет автоматически выполнять фикстуру для каждого теста (не рекомендуется).
+# Главный conftest доступен всем файлам, но если conftest лежит в нижней директории,
+# то будет доступен только тем файлам, которые в нем находятся (области видимости (глобальные/локальные)).
+#
+
 import pytest
-import requests
-
-from configuration import SERVICE_URL
-
-
-
-@pytest.fixture(scope='session', autouse=False)
-def say_hello():
-    print('Hello')
-    return 14
+from random import randrange
 
 
 @pytest.fixture
-def get_users():
-    response = requests.get(SERVICE_URL)
-    return response
+def get_number():
+    """
+    Вернет рандомное число от 1 до 1000 с шагом 5
+    :return: int
+    """
+    return randrange(1, 1000, 5)
+
+
+def _calculate(a: int, b: int):
+    """
+    Локальная функция для фикстуры, что бы принимать аргументы от тестов, и выполнять
+    какие-либо действия с этими аргументами, затем возвращать обратно тесту.
+
+    :param a: int
+    :param b: int
+    :return: int
+    """
+    return a + b
+
+
+@pytest.fixture
+def calculate():
+    """
+    Вызывает локальную функцию для сложения двух чисел.
+    :return: Функция калькулятор
+    """
+    return _calculate
+
+
+@pytest.fixture
+def make_number():
+    print('Im getting number')
+    number = randrange(0, 1000)
+    yield number  # можно ничего не передавать в yield
+    # Здесь делает паузу для выполнения теста,
+    # затем снова возвращается к фикстуре
+    print(f'Number at home {number}')

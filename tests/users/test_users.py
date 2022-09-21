@@ -1,5 +1,9 @@
 """
 Основной файл, содержащий функции, которые запускаются при тестировании
+Для одновременного запуска всех тестов проекта:
+pytest -s -v tests
+
+
 """
 
 import requests
@@ -19,7 +23,19 @@ from src.pydantic_schemas.user import User
 # # [{'id': 1, 'title': 'Post 1'}, {'id': 2, 'title': 'Post 2'}, {'id': 3, 'title': 'Post 3'}]
 
 
-def test_getting_users_list(get_users, say_hello):
+def test_getting_users_list(get_users):
     # print(response.__getstate__())  # Показывает внутреннюю информацию документа
     Response(get_users).assert_status_code(200).validate(User)
-    print(say_hello)  # Печатает результат фикстуры
+
+
+def test_getting_number(get_number):
+    print(get_number)  # Печатает результат фикстуры
+
+
+def test_getting_calculate(calculate):
+    print('Калькулятор', calculate(2, 3))
+
+
+def test_getting_users_id(make_number):
+    print(make_number)
+    pass
