@@ -7,7 +7,7 @@ from pydantic import BaseModel, validator, Field
 
 
 class Post(BaseModel):
-    id: int = Field(le=2)  # больше или равно 2. Field содержит много встроенных валидаций
+    id: int = Field(le=2)  # Больше или равно 2. Field содержит много встроенных валидаций
     # id: int
     title: str
     # name: str = Field('_name')

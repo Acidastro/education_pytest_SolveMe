@@ -31,7 +31,9 @@ def _calculate(a: int, b: int):
     :param b: int
     :return: int
     """
-    return a + b
+    if isinstance(a, int) and isinstance(b, int):
+        return a + b
+    return None
 
 
 @pytest.fixture
@@ -45,6 +47,10 @@ def calculate():
 
 @pytest.fixture
 def make_number():
+    """
+    make random number
+    :return: int
+    """
     print('Im getting number')
     number = randrange(0, 1000)
     yield number  # можно ничего не передавать в yield
