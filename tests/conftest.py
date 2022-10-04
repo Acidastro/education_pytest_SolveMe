@@ -11,6 +11,7 @@
 
 import pytest
 from random import randrange
+from src.generators.player import Player
 
 
 @pytest.fixture
@@ -57,3 +58,8 @@ def make_number():
     # Здесь делает паузу для выполнения теста,
     # затем снова возвращается к фикстуре
     print(f'Number at home {number}')
+
+
+@pytest.fixture
+def get_player_generator():
+    return Player()

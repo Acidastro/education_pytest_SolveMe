@@ -71,3 +71,7 @@ def test_calculator(first_value, second_value, result, calculate):
     Функция автоматически подставляет их по очереди и запускает с ними тесты.
     """
     assert calculate(first_value, second_value) == result
+
+
+def test_fail():
+    assert 1 == 2
