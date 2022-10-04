@@ -14,3 +14,4 @@ Tutorial project, API testing example, can be used as a cheat sheet or template
 9. --duration
 10. custom params
 11. pytest.ini for markers
+12. classes builders
